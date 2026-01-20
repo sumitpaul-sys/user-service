@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -23,6 +25,16 @@ public class UserController {
     @GetMapping("/health")
     public String getHealth(){
         return "UP";
+    }
+
+    @GetMapping
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable Long id) {
+        return userService.getUserById(id);
     }
 
     @PostMapping

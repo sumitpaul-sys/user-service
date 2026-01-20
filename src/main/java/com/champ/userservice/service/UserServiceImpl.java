@@ -1,11 +1,14 @@
 package com.champ.userservice.service;
 
 import com.champ.userservice.exception.DuplicateEmailException;
+import com.champ.userservice.exception.UserNotFoundException;
 import com.champ.userservice.model.User;
 import com.champ.userservice.repository.UserRepository;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -33,5 +36,20 @@ public class UserServiceImpl implements UserService{
         }
 
         return userRepository.save(user);
+    }
+
+    @Override
+    public List<User> getAllUsers(){
+
+        log.info("Printing all users list.....");
+
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User getUserById(Long id){
+
+        return userRepository.findById(id)
+                .orElseThrow(()-> new UserNotFoundException(id));
     }
 }

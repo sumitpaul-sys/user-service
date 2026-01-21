@@ -7,6 +7,8 @@ import com.champ.userservice.service.UserService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,12 +26,12 @@ public class UserController {
 
     @GetMapping("/health")
     public String getHealth(){
-        return "UP";
+        return userService.health();
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public Page<User> getAllUsers(Pageable page) {
+        return userService.getAllUsers(page);
     }
 
     @GetMapping("/{id}")

@@ -6,9 +6,10 @@ import com.champ.userservice.model.User;
 import com.champ.userservice.repository.UserRepository;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -27,7 +28,6 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User createUser(User user) {
-
         log.info("Creating user with email: {}", user.getEmail());
 
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
@@ -39,11 +39,10 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> getAllUsers(){
-
+    public Page<User> getAllUsers(Pageable pageable){
         log.info("Printing all users list.....");
 
-        return userRepository.findAll();
+        return userRepository.findAll(pageable);
     }
 
     @Override
